@@ -9,7 +9,7 @@ import (
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/hello", handlers.HelloHandler)
+	mux.HandleFunc("/api/hello", handlers.HelloHandler)
 
 	log.Println("Starting server on :4000")
 	err := http.ListenAndServe(":4000", mux)
