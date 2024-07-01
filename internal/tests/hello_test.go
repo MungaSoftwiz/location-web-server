@@ -1,9 +1,11 @@
-package web_server
+package tests
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/MungaSoftwiz/location-web-server/internal/handlers"
 )
 
 func TestGEThello(t *testing.T) {
@@ -11,7 +13,7 @@ func TestGEThello(t *testing.T) {
 		request, _ := http.NewRequest(http.MethodGet, "/hello", nil)
 		response := httptest.NewRecorder()
 
-		HelloHandler(response, request)
+		handlers.HelloHandler(response, request)
 
 		got := response.Body.String()
 		want := "Hello, world"
