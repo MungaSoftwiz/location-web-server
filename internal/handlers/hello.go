@@ -6,23 +6,23 @@ import (
 	"net/http"
 
 	"github.com/MungaSoftwiz/location-web-server/internal/utils"
+	"github.com/MungaSoftwiz/location-web-server/internal/services"
 )
 
 func HelloHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello, world"))
 	visitorName := r.URL.Query().Get("visitor_name")
 	if visitorName == "" {
 		visitorName = "Guest"
 	}
 
 	clientIP := utils.GetClientIP(r)
-	location := services.GetLocation(clientIP)
-	weatherData := services.GetWeatherData(geoData.Lat, geoData.Lon)
+	location, _ := services.GetLocation(clientIP)
+	weatherData, _ := services.GetWeatherData(location.Latitude, location.Longitude)
 
 	response := map[string]interface{}{
 		"client_ip": clientIP,
-		"location":  geoData.City,
-		"greeting":  fmt.Sprintf("Hello, %s!, the temperature is %d degrees Celsius in %s", visitorName, weatherData.Main.TempC, location),
+		"location":  location.City,
+		"greeting":  fmt.Sprintf("Hello, %s!, the temperature is %.2f degrees Celsius in %s", visitorName, weatherData.Main.TempC, location.City),
 	}
 
 	w.Header().Set("Content-Type", "application/json")
