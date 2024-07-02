@@ -10,6 +10,12 @@ import (
 	"github.com/MungaSoftwiz/location-web-server/internal/utils"
 )
 
+type Response struct {
+	ClientIP string `json:"client_ip"`
+	Location string `json:"location"`
+	Greeting string `json:"greeting"`
+}
+
 func HelloHandler(w http.ResponseWriter, r *http.Request) {
 	visitorName := r.URL.Query().Get("visitor_name")
 	if visitorName == "" {
@@ -33,10 +39,10 @@ func HelloHandler(w http.ResponseWriter, r *http.Request) {
 
 	tempCelsius := weatherData.Main.TempC - 273.15
 
-	response := map[string]interface{}{
-		"client_ip": clientIP,
-		"location":  location.City,
-		"greeting":  fmt.Sprintf("Hello, %s!, the temperature is %.2f degrees Celsius in %s", visitorName, tempCelsius, location.City),
+	response := Response{
+		ClientIP: clientIP,
+		Location: location.City,
+		Greeting: fmt.Sprintf("Hello, %s!, the temperature is %.2f degrees Celsius in %s", visitorName, tempCelsius, location.City),
 	}
 
 	w.Header().Set("Content-Type", "application/json")
