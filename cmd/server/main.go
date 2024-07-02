@@ -12,6 +12,8 @@ func main() {
 	mux.HandleFunc("/api/hello", handlers.HelloHandler)
 
 	log.Println("Starting server on :4000")
-	err := http.ListenAndServe(":4000", mux)
-	log.Fatal(err)
+	err := http.ListenAndServe("0.0.0.0:4000", mux)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
