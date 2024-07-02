@@ -7,16 +7,21 @@ import (
 )
 
 type Geolocation struct {
-	IP            string  `json:"ip"`
-	CountryName   string  `json:"country_name"`
-	RegionName    string  `json:"region_name"`
-	City          string  `json:"city"`
-	Latitude      float64 `json:"latitude"`
-	Longitude     float64 `json:"longitude"`
+	Status      string  `json:"status"`
+	CountryName string  `json:"country"`
+	CountryCode string  `json:"countryCode"`
+	RegionCode  string  `json:"region"`
+	RegionName  string  `json:"regionName"`
+	City        string  `json:"city"`
+	ZipCode     string  `json:"zip"`
+	Latitude    float64 `json:"lat"`
+	Longitude   float64 `json:"lon"`
+	TimeZone    string  `json:"timezone"`
+	IP          string  `json:"query"`
 }
 
 func GetLocation(ip string) (*Geolocation, error) {
-	url := fmt.Sprintf("https://api.ipbase.com/v1/json/%s", ip)
+	url := fmt.Sprintf("http://ip-api.com/json/%s", ip)
 	response, err := http.Get(url)
 	if err != nil {
 		return nil, err
