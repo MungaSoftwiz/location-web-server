@@ -31,10 +31,12 @@ func HelloHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	tempCelsius := weatherData.Main.TempC - 273.15
+
 	response := map[string]interface{}{
 		"client_ip": clientIP,
 		"location":  location.City,
-		"greeting":  fmt.Sprintf("Hello, %s!, the temperature is %.2f degrees Celsius in %s", visitorName, weatherData.Main.TempC, location.City),
+		"greeting":  fmt.Sprintf("Hello, %s!, the temperature is %.2f degrees Celsius in %s", visitorName, tempCelsius, location.City),
 	}
 
 	w.Header().Set("Content-Type", "application/json")
